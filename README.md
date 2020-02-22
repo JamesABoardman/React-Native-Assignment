@@ -7,6 +7,15 @@ These are where I created my Wireframes for designing the application: [Wirefram
 
 The React-Native Application files are located here: [Assignment Files](https://github.com/JamesHullCS/React-Native-Assignment/tree/master/Assignment) <br> <br/>
 
+
+### Daily TaskList
+
+- [ ] Complete HomePage Wireframes
+- [ ] Complete ProfilePage Wireframes
+- [ ] Complete FollowersPage Wireframes
+- [ ] Complete FollowersPage Wireframes
+
+
 **Assignment Task Order**
 
 - [ ] Design your application’s layout and structure
@@ -33,10 +42,3 @@ and have functionality to view, edit and delete these drafts (much in the same w
 work).
 - [ ] Alter your solution to Extension task 1 by allowing users to schedule when a draft
 Chit is posted.
-
-### Daily TaskList
-
-- [ ] Complete HomePage Wireframes
-- [ ] Complete ProfilePage Wireframes
-- [ ] Complete FollowersPage Wireframes
-- [ ] Complete FollowersPage Wireframes
