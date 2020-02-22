@@ -9,7 +9,7 @@ The React-Native Application files are located here: [Assignment Files](https://
 **Assignment Task Order**
 
 - [ ] Design your application’s layout and structure
-- [ ] Create a new application using the reference guide for help
+- [x] Create a new application using the reference guide for help
 - [ ] Implement your application’s navigation structure using your wireframes
 - [ ] Implement the GET /chits end point to ensure that you can successfully query the API and
 present the results within your application
