@@ -5,7 +5,7 @@ This is a final year assignment created to mimic Twitter but in my case Chittr u
 
 These are where I created my Wireframes for designing the application: [Wireframes](https://github.com/JamesHullCS/React-Native-Assignment/tree/master/React%20Wireframes)
 
-The React-Native Application files are located here: [Assignment Files](https://github.com/JamesHullCS/React-Native-Assignment/tree/master/Assignment) <br/>
+The React-Native Application files are located here: [Assignment Files](https://github.com/JamesHullCS/React-Native-Assignment/tree/master/Assignment) <br> <br/> <br> <br/>
 
 
 **Assignment Task Order** <br/>
