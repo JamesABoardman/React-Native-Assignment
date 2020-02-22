@@ -5,10 +5,10 @@ This is a final year assignment created to mimic Twitter but in my case Chittr u
 
 These are where I created my Wireframes for designing the application: [Wireframes](https://github.com/JamesHullCS/React-Native-Assignment/tree/master/React%20Wireframes)
 
-The React-Native Application files are located here: [Assignment Files](https://github.com/JamesHullCS/React-Native-Assignment/tree/master/Assignment) <br> <br/> <br> <br/>
+The React-Native Application files are located here: [Assignment Files](https://github.com/JamesHullCS/React-Native-Assignment/tree/master/Assignment) <br> <br/> 
 
 
-**Assignment Task Order** <br/>
+**Assignment Task Order** <br> <br/>
 
 - [ ] Design your application’s layout and structure
 - [x] Create a new application using the reference guide for help
@@ -26,7 +26,7 @@ new Chits).
 - [ ] Implement all end points that require working with images
 - [ ] Edit the POST /chits end point to include the option for a user to tag their current location.
 
-**Extension tasks** <br/>
+**Extension tasks** <br> <br/>
 
 - [ ] Alter your application so that users can save local drafts of Chits before sending
 them to the API. You will need to save these drafts to permanent storage within the mobile device
