@@ -5,8 +5,7 @@ This is a final year assignment created to mimic Twitter but in my case Chittr u
 
 These are where I created my Wireframes for designing the application: [Wireframes](https://github.com/JamesHullCS/React-Native-Assignment/tree/master/React%20Wireframes)
 
-The React-Native Application files are located here: [Assignment Files](https://github.com/JamesHullCS/React-Native-Assignment/tree/master/Assignment) <br> <br/> <br> <br/>
-
+The React-Native Application files are located here: [Assignment Files](https://github.com/JamesHullCS/React-Native-Assignment/tree/master/Assignment) <br> <br/>
 
 **Assignment Task Order**
 
@@ -34,3 +33,10 @@ and have functionality to view, edit and delete these drafts (much in the same w
 work).
 - [ ] Alter your solution to Extension task 1 by allowing users to schedule when a draft
 Chit is posted.
+
+### Daily TaskList
+
+- [ ] Complete HomePage Wireframes
+- [ ] Complete ProfilePage Wireframes
+- [ ] Complete FollowersPage Wireframes
+- [ ] Complete FollowersPage Wireframes
