@@ -8,7 +8,7 @@ These are where I created my Wireframes for designing the application: [Wirefram
 The React-Native Application files are located here: [Assignment Files](https://github.com/JamesHullCS/React-Native-Assignment/tree/master/Assignment) <br> <br/> <br> <br/>
 
 
-**Assignment Task Order** <br> <br/>
+**Assignment Task Order**
 
 - [ ] Design your application’s layout and structure
 - [x] Create a new application using the reference guide for help
