@@ -10,7 +10,7 @@ The React-Native Application files are located here: [Assignment Files](https://
 
 ### Daily TaskList
 
-- [ ] Complete HomePage Wireframes
+- [x] Complete HomePage Wireframes
 - [ ] Complete ProfilePage Wireframes
 - [ ] Complete FollowersPage Wireframes
 - [ ] Complete FollowersPage Wireframes
