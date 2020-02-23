@@ -21,9 +21,9 @@ The React-Native Application files are located here: [Assignment Files](https://
 - [ ] Design your application’s layout and structure
 - [x] Create a new application using the reference guide for help
 - [ ] Implement your application’s navigation structure using your wireframes
-- [ ] Implement the GET /chits end point to ensure that you can successfully query the API and
+- [x] Implement the GET /chits end point to ensure that you can successfully query the API and
 present the results within your application
-- [ ] Implement the POST /user end point so that new users can sign up for accounts
+- [x] Implement the POST /user end point so that new users can sign up for accounts
 - [ ] Implement the login and logout end points
 - [ ] Implement the remaining ‘User Management’ end points except for anything that requires
 working with images
