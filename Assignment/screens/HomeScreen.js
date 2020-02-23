@@ -13,7 +13,7 @@ class HomeScreen extends Component {
   }
 
   getData() {
-    return fetch('http://10.0.2.2:3333/api/v0.0.4/chits/').then((response) => response.json()).then((responseJson) => {
+    return fetch('http://10.0.2.2:3333/api/v0.0.5/chits/').then((response) => response.json()).then((responseJson) => {
 
       this.setState({isLoading: false, shoppingListData: responseJson});
 
@@ -21,20 +21,10 @@ class HomeScreen extends Component {
       console.log(error);
     });
   }
+  
   componentDidMount() {
     this.getData();
   }
-
-  // deleteItem(id) {
-  //   return fetch('http://10.0.2.2:3333/api/v0.0.4/chits/' + id, {method: 'delete'}).then((response) => {
-  //     this.getData();
-  //   }).then((response) => {
-  //     Alert.alert("Item deleted")
-  //   }).catch((error) => {
-  //     console.log(error);
-  //   });
-  // }
-  //<Button title="Delete" onPress={() => { this.deleteItem(this.props.id); } }></Button>
 
   render() {
     if (this.state.isLoading) {
@@ -48,7 +38,7 @@ class HomeScreen extends Component {
         <FlatList style ={styling.con} nestedScrollEnabled={true} data={this.state.shoppingListData} 
         renderItem= {({ item }) => (<View style={styling.listStyle}>
         <Text style={styling.txt}>{item.user.given_name+ " "+ item.user.family_name}</Text>
-        <Text style={styling.tx2}>{item.chit_content}</Text></View>
+        <Text style={styling.tx2}>{item.chit_content}</Text><Text style={styling.tx2}>{item.user.email}</Text></View>
         )} keyExtractor={({ id }, index) => id}/>
       </View>);
   }

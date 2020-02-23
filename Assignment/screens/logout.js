@@ -1,7 +1,26 @@
 import React, { Component } from 'react'; 
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'; 
+import { Alert, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-class registerform extends Component {   
+class logout extends Component {   
+
+  logoutFunc = () => {
+    return fetch('http://10.0.2.2:3333/api/v0.0.5/logout', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      }
+    }).then((response) => {
+      console.log(response)
+
+      Alert.alert("Logged out")
+      //if(response == 200) {
+        this.props.navigation.navigate('splashscreen')
+      //}
+    }).catch((error) => {
+      console.error(error);
+    });
+  }
+
   render() {   
     return (   
       <View style={{flex: 1, flexDirection: 'row'}}>
@@ -10,7 +29,7 @@ class registerform extends Component {
           <View style={{ flex: 2}}
           ><Text style={{textAlign: 'center', fontWeight: 'bold'}}>Are you sure you'd like to logout?</Text></View>
           <View style={{ flex: 1}}><TouchableOpacity style={styling.btnPosition}
-            onPress={() => this.props.navigation.navigate('splashscreen')}>
+            onPress={this.logoutFunc}>
             <View style={styling.btnStyle}><Text style={styling.btntxt}> logout </Text></View>
             </TouchableOpacity>
           </View>
@@ -19,7 +38,7 @@ class registerform extends Component {
     );   
   } 
 } 
-export default registerform; 
+export default logout; 
 
 const styling = StyleSheet.create({
   container: {

@@ -5,7 +5,7 @@ class Search extends Component {
   render() {
 
     return (<View>
-      <Text>tweet Screen</Text>
+      <Text>Chit Screen</Text>
 
     </View>);
   }

@@ -1,17 +1,40 @@
 import React, { Component } from 'react'; 
-import {View, TextInput, StyleSheet, Text, TouchableOpacity} from 'react-native'; 
+import {View, TextInput, StyleSheet, Text, TouchableOpacity, Alert} from 'react-native'; 
 
-class registerform extends Component{ 
-  constructor(props){     
+class registerform extends Component { 
+  constructor(props) {     
     super(props);   
 
     this.state = {
-      given_name: '', //State Firstname
-      family_name: '', //State Lastname
-      email: '', //State email
-      password: '', //State password
+      registeruser: {
+        given_name: '', //State Firstname
+        family_name: '', //State Lastname
+        email: '', //State email
+        password: '' //State password
+        }
     }
-  } 
+}
+
+    createUser = () => {
+      return fetch('http://10.0.2.2:3333/api/v0.0.5/user/', {
+        method: 'POST',
+        body: JSON.stringify({
+          given_name: this.state.given_name,
+          family_name: this.state.family_name,
+          email: this.state.email,
+          password: this.state.password,}),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then((response) => {
+        console.log(response);
+        Alert.alert("User Registered!");
+        this.props.navigation.navigate('splashscreen')
+      }).catch((error) => {
+        console.error(error);
+      });
+    }
+
     render(){   
         return(     
           <View style={styling.container}>
@@ -30,7 +53,7 @@ class registerform extends Component{
             </View><View style={{ flex: 2, }}></View>
             <TouchableOpacity
               style={styling.btnPosition}
-              onPress={() => this.props.navigation.navigate('splashscreen')}>
+              onPress={this.createUser}>
               <View style={styling.btnStyle}>
                 <Text style={styling.txt}>Register</Text>
               </View>
@@ -39,7 +62,7 @@ class registerform extends Component{
         </View>
         );   
     } 
-} 
+}
 export default registerform; 
 
 const styling = StyleSheet.create({

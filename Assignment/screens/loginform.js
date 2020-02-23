@@ -1,14 +1,39 @@
 import React, { Component } from 'react'; 
-import {View, TextInput, StyleSheet, Text, TouchableOpacity} from 'react-native'; 
+import {View, TextInput, StyleSheet, Text, TouchableOpacity, Alert} from 'react-native'; 
 
-class loginform extends Component{ 
+class loginform extends Component { 
   constructor(props){     
     super(props);   
     this.state = {
-      email: '', //State email
-      password: '', //State password
+      login: {
+        email: '', //State email
+        password: '', //State password
+      },
+
+        id: '',
+        token: '',
+      }
     }
-  } 
+
+    login = () => {
+      return fetch('http://10.0.2.2:3333/api/v0.0.5/login/', {
+        method: 'POST',
+        body: JSON.stringify({email: this.state.email,
+          password: this.state.password
+        
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then((response) => {
+        console.log(response)
+        Alert.alert("Logged in")
+        this.props.navigation.navigate('HomeScreen')
+      }).catch((error) => {
+        console.error(error);
+      });
+    }
+
     render() {
         return(     
           <View style={styling.container}>
@@ -25,7 +50,7 @@ class loginform extends Component{
 
             <TouchableOpacity
               style={styling.btnPosition}
-              onPress={() => this.props.navigation.navigate('HomeScreen')}>
+              onPress={this.login}>
               <View style={styling.btnStyle}>
                 <Text style={styling.txt}>login</Text>
               </View>
