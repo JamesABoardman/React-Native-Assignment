@@ -1,21 +1,24 @@
 import React, { Component } from 'react'; 
 import { Alert, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-
-class logout extends Component {   
+//import loginform from './loginform';
+class logout extends Component {  
+  
 
   logoutFunc = () => {
     return fetch('http://10.0.2.2:3333/api/v0.0.5/logout', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
+        "X-Authorization": window.$TOKEN
+        
       }
     }).then((response) => {
-      console.log(response)
 
-      Alert.alert("Logged out")
-      //if(response == 200) {
+      if(response.status == 200) {
+        console.log(response)
+        Alert.alert("Logged out")
         this.props.navigation.navigate('splashscreen')
-      //}
+      }
     }).catch((error) => {
       console.error(error);
     });

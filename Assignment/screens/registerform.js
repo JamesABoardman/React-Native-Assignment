@@ -6,30 +6,31 @@ class registerform extends Component {
     super(props);   
 
     this.state = {
-      registeruser: {
         given_name: '', //State Firstname
         family_name: '', //State Lastname
         email: '', //State email
         password: '' //State password
-        }
     }
 }
 
     createUser = () => {
       return fetch('http://10.0.2.2:3333/api/v0.0.5/user/', {
         method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           given_name: this.state.given_name,
           family_name: this.state.family_name,
           email: this.state.email,
           password: this.state.password,}),
-        headers: {
-          "Content-Type": "application/json"
-        }
+
       }).then((response) => {
         console.log(response);
         Alert.alert("User Registered!");
-        this.props.navigation.navigate('splashscreen')
+        if(response.status == 200) {
+          this.props.navigation.navigate('splashscreen')
+        }
       }).catch((error) => {
         console.error(error);
       });

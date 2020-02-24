@@ -9,18 +9,23 @@ import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {createSwitchNavigator, createAppContainer} from 'react-navigation';
 
 // Screens
-import HomeScreen from './screens/HomeScreen'
-import AboutScreen from './screens/AboutScreen'
-import Logout from './screens/logout'
 import splashscreen from './screens/splashpage'
 import registerform from './screens/registerform'
 import loginform from './screens/loginform'
+import HomeScreen from './screens/HomeScreen'
 import Profile from './screens/Profile'
 import Search from './screens/Search'
 import Chit from './screens/Chit'
 import UserSettings from './screens/UserSettings'
 import Followers from './screens/Followers'
 import Following from './screens/Following'
+import Logout from './screens/logout'
+
+
+
+
+//Not needed
+import AboutScreen from './screens/AboutScreen'
 
 
 // Images
@@ -176,7 +181,9 @@ const AppSwitchNavigator = createSwitchNavigator({
   splashscreen: { screen: splashscreen },
   Register: { screen: registerform },
   Login: { screen: loginform },
+  UserSettings: { screen: UserSettings },
   HomeScreen: { screen: DashboardTabNavigator },
+  
    });
 
 

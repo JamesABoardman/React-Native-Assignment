@@ -2,34 +2,36 @@ import React, { Component } from 'react';
 import {View, TextInput, StyleSheet, Text, TouchableOpacity, Alert} from 'react-native'; 
 
 class loginform extends Component { 
-  constructor(props){     
+  constructor(props){ 
     super(props);   
+
     this.state = {
-      login: {
         email: '', //State email
         password: '', //State password
-      },
-
-        id: '',
-        token: '',
-      }
     }
+  }
+
 
     login = () => {
       return fetch('http://10.0.2.2:3333/api/v0.0.5/login/', {
         method: 'POST',
-        body: JSON.stringify({email: this.state.email,
-          password: this.state.password
-        
-        }),
         headers: {
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: this.state.email,
+          password: this.state.password
+        })
       }).then((response) => {
-        console.log(response)
-        Alert.alert("Logged in")
-        this.props.navigation.navigate('HomeScreen')
-      }).catch((error) => {
+        if (response.status == 200) { // This will only redirect if the status code == 200 "OK"
+            response.json().then((responsejson) => {
+              window.$TOKEN = responsejson.token;
+              window.$ID = responsejson.id;
+              alert(responsejson.token+" "+ responsejson.id);  
+              this.props.navigation.navigate('HomeScreen')
+            })
+          } 
+        }).catch((error) => {
         console.error(error);
       });
     }
