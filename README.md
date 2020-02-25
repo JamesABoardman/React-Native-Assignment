@@ -25,7 +25,7 @@ The React-Native Application files are located here: [Assignment Files](https://
 present the results within your application
 - [x] Implement the POST /user end point so that new users can sign up for accounts
 - [x] Implement the login and logout end points
-- [ ] Implement the remaining ‘User Management’ end points except for anything that requires
+- [x] Implement the remaining ‘User Management’ end points except for anything that requires
 working with images
 - [ ] Implement the remaining ‘Posting Chits’ end points except for anything that requires
 working with images (at this stage, do not implement the geolocation tagging when creating
