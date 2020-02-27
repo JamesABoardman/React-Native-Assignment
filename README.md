@@ -29,10 +29,10 @@ present the results within your application
 - [x] Implement the login and logout end points
 - [x] Implement the remaining ‘User Management’ end points except for anything that requires
 working with images
-- [ ] Implement the remaining ‘Posting Chits’ end points except for anything that requires
+- [x] Implement the remaining ‘Posting Chits’ end points except for anything that requires
 working with images (at this stage, do not implement the geolocation tagging when creating
 new Chits).
-- [ ] Implement the ‘Follower management’ end points
+- [x] Implement the ‘Follower management’ end points
 - [ ] Implement all end points that require working with images
 - [ ] Edit the POST /chits end point to include the option for a user to tag their current location.
 
