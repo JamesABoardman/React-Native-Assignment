@@ -57,7 +57,7 @@ class UserSettings extends Component {
               style={styling.btnPosition}
               onPress={this.UpdateUser}>
               <View style={styling.btnStyle}>
-                <Text style={styling.txt}>Register</Text>
+                <Text style={styling.txt}>Update</Text>
               </View>
             </TouchableOpacity> 
           </View>

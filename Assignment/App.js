@@ -21,13 +21,6 @@ import Followers from './screens/Followers'
 import Following from './screens/Following'
 import Logout from './screens/logout'
 
-
-
-
-//Not needed
-import AboutScreen from './screens/AboutScreen'
-
-
 // Images
 import burgerimage from './image/drawer.png'
 
@@ -77,10 +70,9 @@ const ProfileScreenStackNavigators = createStackNavigator({
   }
 );
 
-
-// StackNavigation for AboutScreen.
-const AboutScreenStackNavigators = createStackNavigator({
-  AboutScreen
+// StackNavigation for Logout.
+const FollowersStackNavigators = createStackNavigator({
+  Followers
 },
   {
     defaultNavigationOptions: ({ navigation }) => {
@@ -88,9 +80,28 @@ const AboutScreenStackNavigators = createStackNavigator({
         headerLeft: (
           <TouchableOpacity onPress={() => navigation.openDrawer()}>
             <Image source={burgerimage} style={{
-            width: 25,
-            height: 25,
-            marginLeft: 5 }}/>
+              width: 25,
+              height: 25,
+              marginLeft: 5 }}/>
+          </TouchableOpacity>
+        )
+      };
+    }
+  }
+);
+// StackNavigation for Logout.
+const FollowingStackNavigators = createStackNavigator({
+  Following
+},
+  {
+    defaultNavigationOptions: ({ navigation }) => {
+      return {
+        headerLeft: (
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <Image source={burgerimage} style={{
+              width: 25,
+              height: 25,
+              marginLeft: 5 }}/>
           </TouchableOpacity>
         )
       };
@@ -122,7 +133,8 @@ const LogoutStackNavigators = createStackNavigator({
 const AppDrawerNavigator = createDrawerNavigator({
   HomeScreen: {screen: HomeScreenStackNavigators },
   Profile: { screen: ProfileScreenStackNavigators },
-  AboutScreen: { screen: AboutScreenStackNavigators },
+  Followers: { screen: FollowersStackNavigators },
+  Following: { screen: FollowingStackNavigators },
   Logout: { screen: LogoutStackNavigators },
 });
 
@@ -182,8 +194,9 @@ const AppSwitchNavigator = createSwitchNavigator({
   Register: { screen: registerform },
   Login: { screen: loginform },
   UserSettings: { screen: UserSettings },
+  Followers: { screen: Followers },
+  Following: { screen: Following },
   HomeScreen: { screen: DashboardTabNavigator },
-  
    });
 
 

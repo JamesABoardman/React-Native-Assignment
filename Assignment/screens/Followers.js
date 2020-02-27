@@ -8,14 +8,14 @@ class Followers extends Component {
     this.state = {
       isLoading: true,
       followerslist: []
+      
     }
   }
 
   getFollowers() {
-    return fetch('http://10.0.2.2:3333/api/v0.0.5/user/'+ window.$ID +"/followers/").then((response) => response.json()).then((responseJson) => {
-
+    return fetch('http://10.0.2.2:3333/api/v0.0.5/user/'+ window.$ID +"/followers/").then((response) => response.json())
+    .then((responseJson) => {
       this.setState({isLoading: false, followerslist: responseJson});
-
     }).catch((error) => {
       console.log(error);
     });
@@ -33,20 +33,18 @@ class Followers extends Component {
     }
 
     return (
-      <View style={styling.cont}>
-        <FlatList style ={styling.con} nestedScrollEnabled={true} data={this.state.followerslist} 
+      <View style={styling.container}>
+        <FlatList nestedScrollEnabled={true} data={this.state.followerslist} 
         renderItem= {({ item }) => (<View style={styling.listStyle}>
         <Text style={styling.txt}>{item.given_name+ " "+ item.family_name}</Text>
-        <Text style={styling.tx2}>{}</Text><Text style={styling.tx2}>{item.email}</Text></View>
-        )} keyExtractor={({ id }, index) => id}/>
+        <Text>{item.email}</Text></View> )} keyExtractor={({ id }, index) => id}/>
       </View>);
   }
 }
-
 export default Followers;
 
 const styling = StyleSheet.create({
-  cont: {
+  container: {
     backgroundColor: 'white',
     padding: 0,
   },

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {ActivityIndicator, Text, View, Button, ScrollView, FlatList, StyleSheet} from 'react-native';
-
+import {ActivityIndicator, Text, View, Button, ScrollView, FlatList, StyleSheet, Timestamp} from 'react-native';
+import Moment from 'moment';
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -13,10 +13,9 @@ class HomeScreen extends Component {
   }
 
   getChits() {
-    return fetch('http://10.0.2.2:3333/api/v0.0.5/chits/').then((response) => response.json()).then((responseJson) => {
-
-      this.setState({isLoading: false, Chitdatalist: responseJs.on});
-
+    return fetch('http://10.0.2.2:3333/api/v0.0.5/chits/').then((response) => response.json())
+    .then((responseJson) => {
+      this.setState({isLoading: false, Chitdatalist: responseJson});
     }).catch((error) => {
       console.log(error);
     });
@@ -34,20 +33,18 @@ class HomeScreen extends Component {
     }
 
     return (
-      <View style={styling.cont}>
-        <FlatList style ={styling.con} nestedScrollEnabled={true} data={this.state.Chitdatalist} 
+      <View style={styling.container}>
+        <FlatList nestedScrollEnabled={true} data={this.state.Chitdatalist} 
         renderItem= {({ item }) => (<View style={styling.listStyle}>
-        <Text style={styling.txt}>{item.user.given_name+ " "+ item.user.family_name}</Text>
-        <Text style={styling.tx2}>{item.chit_content}</Text><Text style={styling.tx2}>{item.user.email}</Text></View>
-        )} keyExtractor={({ id }, index) => id}/>
+        <Text style={styling.txt}>{item.user.given_name+ " "+ item.user.family_name+" "+item.longitude+" "+ Moment(item.timestamp).format("DD:MM:YYYY HH:mm:ss")}</Text>
+        <Text>{item.chit_content}</Text></View> )} keyExtractor={({ id }) => id}/>
       </View>);
   }
 }
-
 export default HomeScreen;
 
 const styling = StyleSheet.create({
-  cont: {
+  container: {
     backgroundColor: 'white',
     padding: 0,
   },
