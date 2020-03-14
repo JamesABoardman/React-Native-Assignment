@@ -11,11 +11,11 @@ The React-Native Application files are located here: [Assignment Files](https://
 ### Daily TaskList
 
 - [x] Complete UserSettingsPage Wireframes
-- [ ] Complete ProfilePage Wireframes
-- [ ] Complete PostChitPage Wireframes
-- [ ] Complete SearchPage Wireframes
-- [ ] Implement Location
-- [ ] Implement TimeStamp
+- [x] Complete ProfilePage Wireframes
+- [x] Complete PostChitPage Wireframes
+- [x] Complete SearchPage Wireframes
+- [x] Implement Location
+- [x] Implement TimeStamp
 
 
 **Assignment Task Order**
@@ -33,8 +33,8 @@ working with images
 working with images (at this stage, do not implement the geolocation tagging when creating
 new Chits).
 - [x] Implement the ‘Follower management’ end points
-- [ ] Implement all end points that require working with images
-- [ ] Edit the POST /chits end point to include the option for a user to tag their current location.
+- [x] Implement all end points that require working with images
+- [x] Edit the POST /chits end point to include the option for a user to tag their current location.
 
 **Extension tasks**
 
