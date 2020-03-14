@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {ActivityIndicator, Text, View, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
+import { ActivityIndicator, Text, View, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
+//import base64 from 'react-native-base64'
 
 class Profile extends Component {
   constructor(props) {
@@ -7,6 +8,7 @@ class Profile extends Component {
 
     this.state = {
       isLoading: true,
+      image: '',
       new: {
           user_id: 0,
           given_name: '',
@@ -27,7 +29,7 @@ class Profile extends Component {
       console.log(error);
     });
   }
-  
+
   componentDidMount() {
     this.getprofile();
   }
@@ -40,15 +42,18 @@ class Profile extends Component {
     }
 
     return (
+      
       <View style={styling.cont}>
-        <View style = {styling.container2}>
-          <View style={styling.circle}></View>
+        <View style ={styling.container2}>
+        <Image style={styling.profileImg} source={{uri: 'http://10.0.2.2:3333/api/v0.0.5/user/'+window.$ID+'/photo/'}}/>
           <Text style={styling.tx2}>{this.state.new.given_name+" "+this.state.new.family_name}</Text>
         </View>
         <FlatList style ={styling.con} nestedScrollEnabled={true} data={this.state.new.recent_chits} 
         renderItem= {({ item }) => (<View style={styling.listStyle}>
+          <Image style={styling.circle} source={{uri: 'http://10.0.2.2:3333/api/v0.0.5/user/'+window.$ID+'/photo/'}}/>
           <Text style={styling.tx2}>{this.state.new.email}</Text>
-        <Text style={styling.tx2}>{item.chit_content}</Text></View> )} keyExtractor={({ id }) => id}/>
+        <Text style={styling.tx2}>{item.chit_content}</Text>
+        <Image style={styling.ChitImg} source={{ uri: 'http://10.0.2.2:3333/api/v0.0.5/chits/' + item.chit_id + '/photo' }} /></View> )} keyExtractor={({ id }) => id}/>
       </View>);
   }
 }
@@ -65,9 +70,9 @@ const styling = StyleSheet.create({
     alignItems: 'center'
   },
   circle: {
-    backgroundColor: 'red',
-    height: 100,
-    width: 100,
+    //backgroundColor: 'red',
+    height: 50,
+    width: 50,
     borderRadius: 30,
   },
   listStyle: {
@@ -94,4 +99,13 @@ const styling = StyleSheet.create({
     fontWeight: '800',
     textAlign: 'center',
   },
+  ChitImg: {
+    height: 50,
+    width: 100,
+    //borderRadius: 30,
+  },
+  profileImg: {
+    height: 100,
+    width: 100
+  }
 });

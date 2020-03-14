@@ -20,6 +20,7 @@ class UserSettings extends Component {
           "Content-Type": "application/json",
           "X-Authorization": window.$TOKEN
         },
+        
         body: JSON.stringify({
           given_name: this.state.given_name,
           family_name: this.state.family_name,

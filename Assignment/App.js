@@ -20,6 +20,8 @@ import UserSettings from './screens/UserSettings'
 import Followers from './screens/Followers'
 import Following from './screens/Following'
 import Logout from './screens/logout'
+import CameraPage from './screens/CameraPage'
+import OtherProfiles from './screens/OtherProfiles'
 
 // Images
 import burgerimage from './image/drawer.png'
@@ -110,6 +112,26 @@ const FollowingStackNavigators = createStackNavigator({
 );
 
 // StackNavigation for Logout.
+const UserSettingsStackNavigators = createStackNavigator({
+  UserSettings
+},
+  {
+    defaultNavigationOptions: ({ navigation }) => {
+      return {
+        headerLeft: (
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <Image source={burgerimage} style={{
+              width: 25,
+              height: 25,
+              marginLeft: 5 }}/>
+          </TouchableOpacity>
+        )
+      };
+    }
+  }
+);
+
+// StackNavigation for Logout.
 const LogoutStackNavigators = createStackNavigator({
   Logout
 },
@@ -135,6 +157,7 @@ const AppDrawerNavigator = createDrawerNavigator({
   Profile: { screen: ProfileScreenStackNavigators },
   Followers: { screen: FollowersStackNavigators },
   Following: { screen: FollowingStackNavigators },
+  UserSettings: { screen: UserSettingsStackNavigators},
   Logout: { screen: LogoutStackNavigators },
 });
 
@@ -176,6 +199,18 @@ const DashboardTabNavigator = createBottomTabNavigator(
 
         ),
       }
+    },
+    CameraPage: {
+      screen: CameraPage,
+      navigationOptions: {
+        tabBarIcon: ({}) => (
+        <View>
+          <Icon
+          name='camera' size={30}/>
+        </View>
+
+        ),
+      }
     }
   },
   {
@@ -196,7 +231,9 @@ const AppSwitchNavigator = createSwitchNavigator({
   UserSettings: { screen: UserSettings },
   Followers: { screen: Followers },
   Following: { screen: Following },
+  CameraPage: { screen: CameraPage },
   HomeScreen: { screen: DashboardTabNavigator },
+  OtherProfiles: { screen: OtherProfiles}
    });
 
 

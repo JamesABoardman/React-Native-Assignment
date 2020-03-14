@@ -26,10 +26,13 @@ class loginform extends Component {
             response.json().then((responsejson) => {
               window.$TOKEN = responsejson.token;
               window.$ID = responsejson.id;
-              alert(responsejson.token+" "+ responsejson.id);  
+              alert(responsejson.token+" "+ responsejson.id);
               this.props.navigation.navigate('HomeScreen')
             })
-          } 
+          }
+          if (response.status == 400) {
+            alert('Wrong username or Password! Please try again!');
+          }
         }).catch((error) => {
         console.error(error);
       });
@@ -39,16 +42,15 @@ class loginform extends Component {
         return(     
           <View style={styling.container}>
           <Text style={styling.headerStyle}>Chittr</Text>
-          <View style={[{flex: 1 }, styling.elementsContainer,]}>
+          <View style={[{flex: 1 }, styling.elementsContainer]}>
             <View style={{ flex: 3 }}></View>
             <View style={[{ flex: 4 }, styling.txtContainer]}>
               <TextInput style={styling.txtInputStyle} placeholder = 'enter email here' placeholderTextColor='black' onChangeText={(email) => {
                 this.setState({email})}} value={this.state.email}></TextInput>
-              <TextInput style={styling.txtInputStyle} placeholder = 'enter password here' placeholderTextColor='black' onChangeText={(password) => {
+              <TextInput secureTextEntry={true} style={styling.txtInputStyle} placeholder = 'enter password here' placeholderTextColor='black' onChangeText={(password) => {
                 this.setState({password})}} value={this.state.password}></TextInput>
             </View>
             <View style={{ flex: 3, }}>
-
             <TouchableOpacity
               style={styling.btnPosition}
               onPress={this.login}>
@@ -107,7 +109,7 @@ const styling = StyleSheet.create({
         alignItems: 'center',
         borderColor: 'black',
         textAlign: 'center',
-        marginBottom: 15
+        marginBottom: 15,
       }
     });
   

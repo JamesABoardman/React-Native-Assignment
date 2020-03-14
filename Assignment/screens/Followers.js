@@ -31,7 +31,6 @@ class Followers extends Component {
         <ActivityIndicator/>
       </View>)
     }
-
     return (
       <View style={styling.container}>
         <FlatList nestedScrollEnabled={true} data={this.state.followerslist} 
