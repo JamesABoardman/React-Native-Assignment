@@ -11,8 +11,11 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.6",
+    "jest-serializer-enzyme": "^1.0.0",
     "moment": "^2.24.0",
     "react": "16.9.0",
+    "react-addons-test-utils": "^15.6.2",
+    "react-dom": "^16.13.1",
     "react-native": "0.61.5",
     "react-native-base64": "0.0.2",
     "react-native-camera": "^3.19.0",
@@ -27,19 +30,23 @@
     "react-navigation": "^4.1.0",
     "react-navigation-drawer": "^2.3.4",
     "react-navigation-stack": "^2.1.0",
-    "react-navigation-tabs": "^2.7.0"
+    "react-navigation-tabs": "^2.7.0",
+    "react-test-render": "^1.1.2"
   },
   "devDependencies": {
     "@babel/core": "7.8.4",
     "@babel/runtime": "7.8.4",
     "@react-native-community/eslint-config": "0.0.5",
-    "babel-jest": "24.9.0",
+    "babel-jest": "^24.9.0",
     "eslint": "6.8.0",
-    "jest": "24.9.0",
+    "jest": "^24.9.0",
     "metro-react-native-babel-preset": "0.56.4",
     "react-test-renderer": "16.9.0"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "snapshotSerializers": [
+      "./node_modules/jest-serializer-enzyme"
+    ]
   }
 }

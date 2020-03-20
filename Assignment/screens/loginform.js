@@ -1,72 +1,83 @@
 import React, { Component } from 'react'; 
 import {View, TextInput, StyleSheet, Text, TouchableOpacity, Alert} from 'react-native'; 
 
-class loginform extends Component { 
+export default class loginform extends Component { 
   constructor(props){ 
     super(props);   
 
     this.state = {
-        email: '', //State email
-        password: '', //State password
+        email: '',
+        password: '',
     }
   }
 
-    login = () => {
-      return fetch('http://10.0.2.2:3333/api/v0.0.5/login/', {
+    login = () => { 
+      if (this.state.email != '' && this.state.password !='') {  // Checks if the input is empty if so it will give an alert.
+
+      return fetch('http://10.0.2.2:3333/api/v0.0.5/login/', { // This will post the login if they match we'll get our response.
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: this.state.email,
-          password: this.state.password
+            email: this.state.email,
+            password: this.state.password
         })
       }).then((response) => {
         if (response.status == 200) { // This will only redirect if the status code == 200 "OK"
             response.json().then((responsejson) => {
-              window.$TOKEN = responsejson.token;
-              window.$ID = responsejson.id;
-              alert(responsejson.token+" "+ responsejson.id);
-              this.props.navigation.navigate('HomeScreen')
+              window.$TOKEN = responsejson.token; // Saves the the token response as a global variable.
+              window.$ID = responsejson.id; // Saves the the id response as a global variable.
+              //Alert.alert(responsejson.token+" "+ responsejson.id); // For Debugging.
+              this.props.navigation.navigate('HomeScreen') // Navigates to the HomeScreen if login is correct
             })
           }
-          if (response.status == 400) {
+          if (response.status == 400) { // If the details are wrong it'll display an alert.
             alert('Wrong username or Password! Please try again!');
           }
         }).catch((error) => {
         console.error(error);
       });
+      } else {
+        Alert.alert("You're missing an email or password"); 
     }
+  }
 
     render() {
         return(     
-          <View style={styling.container}>
-          <Text style={styling.headerStyle}>Chittr</Text>
-          <View style={[{flex: 1 }, styling.elementsContainer]}>
+          <View style={styles.container}>
+          <Text style={styles.headerStyle}>Chittr</Text>
+          <View style={[{flex: 1 }, styles.elementsContainer]}>
             <View style={{ flex: 3 }}></View>
-            <View style={[{ flex: 4 }, styling.txtContainer]}>
-              <TextInput style={styling.txtInputStyle} placeholder = 'enter email here' placeholderTextColor='black' onChangeText={(email) => {
+            <View style={[{ flex: 4 }, styles.txtContainer]}>
+              <TextInput style={styles.txtInputStyle} placeholder = 'enter email here' placeholderTextColor='black' onChangeText={(email) => {
                 this.setState({email})}} value={this.state.email}></TextInput>
-              <TextInput secureTextEntry={true} style={styling.txtInputStyle} placeholder = 'enter password here' placeholderTextColor='black' onChangeText={(password) => {
+              <TextInput secureTextEntry={true} style={styles.txtInputStyle} placeholder = 'enter password here' placeholderTextColor='black' onChangeText={(password) => {
                 this.setState({password})}} value={this.state.password}></TextInput>
             </View>
             <View style={{ flex: 3, }}>
-            <TouchableOpacity
-              style={styling.btnPosition}
-              onPress={this.login}>
-              <View style={styling.btnStyle}>
-                <Text style={styling.txt}>login</Text>
-              </View>
-            </TouchableOpacity>    
             </View>
+            <TouchableOpacity
+              style={styles.btnPosition}
+              onPress={this.login}>
+              <View style={styles.btnStyle}>
+                <Text style={styles.txt}>login</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.btnPosition}
+              onPress={() =>this.props.navigation.navigate('splashscreen')}>
+              <View style={styles.btnStyle}>
+                <Text style={styles.txt}>Back</Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
         );   
     } 
 } 
-export default loginform; 
 
-const styling = StyleSheet.create({
+const styles = StyleSheet.create({
       container: {
         flex: 1,
         backgroundColor: 'purple',
@@ -101,7 +112,7 @@ const styling = StyleSheet.create({
       },
       txt: {
         color: 'white',
-        fontSize: 20,
+        fontSize: 15,
         fontWeight: '800',
         textAlign: 'center',
       },
@@ -112,4 +123,3 @@ const styling = StyleSheet.create({
         marginBottom: 15,
       }
     });
-  

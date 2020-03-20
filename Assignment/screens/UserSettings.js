@@ -1,7 +1,7 @@
 import React, { Component } from 'react'; 
 import {View, TextInput, StyleSheet, Text, TouchableOpacity, Alert} from 'react-native'; 
 
-class UserSettings extends Component { 
+export default class UserSettings extends Component { 
   constructor(props) {     
     super(props);   
 
@@ -14,7 +14,8 @@ class UserSettings extends Component {
 }
 
     UpdateUser = () => {
-      return fetch('http://10.0.2.2:3333/api/v0.0.5/user/'+window.$ID+'/', {
+      if (this.state.given_name != '' && this.state.family_name !='' && this.state.email !='' && this.state.password !='') {  // Checks if the input is empty if so it will give an alert.
+      return fetch('http://10.0.2.2:3333/api/v0.0.5/user/'+window.$ID+'/', { //Update user details
         method: 'PATCH',
         headers: {
           "Content-Type": "application/json",
@@ -28,14 +29,21 @@ class UserSettings extends Component {
           password: this.state.password,}),
 
       }).then((response) => {
-        console.log(response);
-        Alert.alert("User details updated!");
-        if(response.status == 201) {
-          this.props.navigation.navigate('splashscreen')
+        if (response.status == 201) {
+          this.props.navigation.navigate('Profile');
+        }
+        if (response.status == 401){
+          Alert.alert("Unauthorised Request");
+        }
+        if(response.status == 404){
+          Alert.alert("Details not found")
         }
       }).catch((error) => {
         console.error(error);
       });
+    } else {
+      Alert.alert("You're missing details"); 
+    }
     }
 
     render(){   
@@ -61,12 +69,19 @@ class UserSettings extends Component {
                 <Text style={styling.txt}>Update</Text>
               </View>
             </TouchableOpacity> 
+            <TouchableOpacity
+              style={styling.btnPosition}
+              onPress={() =>this.props.navigation.navigate('Profile')}>
+              <View style={styling.btnStyle}>
+                <Text style={styling.txt}>Back to Profile</Text>
+              </View>
+            </TouchableOpacity> 
           </View>
         </View>
         );   
     } 
 }
-export default UserSettings; 
+
 
 const styling = StyleSheet.create({
       container: {

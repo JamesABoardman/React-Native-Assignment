@@ -22,13 +22,11 @@ import Following from './screens/Following'
 import Logout from './screens/logout'
 import CameraPage from './screens/CameraPage'
 import OtherProfiles from './screens/OtherProfiles'
+import ViewDrafts from './screens/ViewDrafts'
+import UserPicture from './screens/UserPicture'
 
 // Images
 import burgerimage from './image/drawer.png'
-
-//Splash
-//Register / Login
-//Homepage ( Draw Nav / Profile / dhjhj / dwjdwhd) (Bottom Nav / Home / Search / Chit )
 
 //Primary page (Homapage) children (Draw / Bottom)
 
@@ -154,10 +152,8 @@ const LogoutStackNavigators = createStackNavigator({
 // Creates the parent draw navigation using the stackNavigation's childs.
 const AppDrawerNavigator = createDrawerNavigator({
   HomeScreen: {screen: HomeScreenStackNavigators },
-  Profile: { screen: ProfileScreenStackNavigators },
   Followers: { screen: FollowersStackNavigators },
   Following: { screen: FollowingStackNavigators },
-  UserSettings: { screen: UserSettingsStackNavigators},
   Logout: { screen: LogoutStackNavigators },
 });
 
@@ -200,13 +196,13 @@ const DashboardTabNavigator = createBottomTabNavigator(
         ),
       }
     },
-    CameraPage: {
-      screen: CameraPage,
+    Profile: {
+      screen: Profile,
       navigationOptions: {
         tabBarIcon: ({}) => (
         <View>
           <Icon
-          name='camera' size={30}/>
+          name='person' size={30}/>
         </View>
 
         ),
@@ -233,7 +229,11 @@ const AppSwitchNavigator = createSwitchNavigator({
   Following: { screen: Following },
   CameraPage: { screen: CameraPage },
   HomeScreen: { screen: DashboardTabNavigator },
-  OtherProfiles: { screen: OtherProfiles}
+  OtherProfiles: { screen: OtherProfiles },
+  ViewDrafts: { screen: ViewDrafts },
+  UserPicture: { screen: UserPicture },
+  Chit: { screen: Chit},
+  Search: { screen: Search }
    });
 
 

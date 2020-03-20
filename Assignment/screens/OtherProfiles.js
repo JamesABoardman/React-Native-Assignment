@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import { ActivityIndicator, Text, View, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { ActivityIndicator, Text, View, FlatList, StyleSheet, TouchableOpacity, Image, TouchableHighlight } from 'react-native';
 //import base64 from 'react-native-base64'
 
-class OtherProfiles extends Component {
+export default class OtherProfiles extends Component {
   constructor(props) {
     super(props);
 
@@ -20,17 +20,19 @@ class OtherProfiles extends Component {
   }
 
   follow(id){
-    return fetch('http://10.0.2.2:3333/api/v0.0.5/user/' + id + '/follow/', {method: 'POST', headers: {
+    return fetch('http://10.0.2.2:3333/api/v0.0.5/user/' + id + '/follow/', {method: 'POST', headers: { // Makes a post request to follow a user.
       "Content-Type": "application/json",
       "X-Authorization": window.$TOKEN
     },
-  }).then((response) => {
-    if(response.status == 200) {
-
-      Alert.alert("User Followed")
+  }).then((response) => { // Response to request
+    if(response.status == 200) {  // response status 200 OK
+      console.log("Followed Successfully")
     }
-    if(response.status == 400) {
-      Alert.alert("Already Following")
+    if(response.status == 401){   // response status 400
+      Alert.alert("Unauthorised request") // Not the authentication to do this
+    }
+    if(response.status == 404) { // can't find user error
+      Alert.alert("Not found")
     }
     }).catch((error) => {
       console.log(error);
@@ -38,16 +40,19 @@ class OtherProfiles extends Component {
   }
 
   unFollow(id){
-    return fetch('http://10.0.2.2:3333/api/v0.0.5/user/' + id + '/follow/', {method: 'delete', headers: {
+    return fetch('http://10.0.2.2:3333/api/v0.0.5/user/' + id + '/follow/', {method: 'delete', headers: { // Makes a delete request to unfollow a user.
       "Content-Type": "application/json",
       "X-Authorization": window.$TOKEN
     },
-  }).then((response) => {
-      if(response.status == 200) {
-        Alert.alert("User Unfollowed")
+  }).then((response) => { // Response to request
+      if(response.status == 200) { // response status 200 OK
+        console.log("Unfollowed Successfully")
       }
-      if(response.status == 400){
-        Alert.alert("User Not following")
+      if(response.status == 401) { // response status 400
+        Alert.alert("Unauthorised request") // Not the authentication to do this
+      }
+      if(response.status == 404) { // can't find user error
+        Alert.alert("Not found")
       }
     }).catch((error) => {
       
@@ -55,29 +60,19 @@ class OtherProfiles extends Component {
     });
   }
 
-  getFollowing() {
-    return fetch('http://10.0.2.2:3333/api/v0.0.5/user/'+window.$ID+"/following/").then((response) => response.json())
-    .then((responseJson) => {
-      this.setState({isLoading: false, FollowingList: responseJson});
-      window.$ez = []; //Empty Array to parse the USERID into.
-      //console.log(this.state.FollowingList[0].user_id)
-      this.state.FollowingList.forEach(myFunction);
-      function myFunction(item, index) {
-        window.$ez.push(item.user_id) //Pushes the user_id's to the array
-        //console.log(window.$ez)
-      }
-   
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
-
   getprofile() {
-    return fetch('http://10.0.2.2:3333/api/v0.0.5/user/'+ window.$otherUser +"/")
+    return fetch('http://10.0.2.2:3333/api/v0.0.5/user/'+ window.$otherUser +"/") // Used to get the user details for a another user.
     .then((response) => {
+      if (response.status == 200) { //If response is 200
       response.json().then((responseJson) => {
-      this.setState({isLoading: false, new: responseJson});
-      })
+      this.setState({isLoading: false, new: responseJson}); // set the state.
+      })}
+      if (response.status == 400) { // If the response is 400.
+        Alert.alert("Bad Request") // Bad request response.
+      }
+      if (response.status == 404) { // If the response is 404.
+        Alert.alert("User details cannot be found") // User not found response.
+      }
     }).catch((error) => {
       console.log(error);
     });
@@ -92,7 +87,6 @@ class OtherProfiles extends Component {
 
   componentDidMount() {
     this.getprofile();
-    this.getFollowing();
   }
 
   render() {
@@ -103,69 +97,168 @@ class OtherProfiles extends Component {
     }
 
     return (
-      <View style={styling.cont}>
-        <View style ={styling.container2}>
-        <Image style={styling.circle} source={{uri: 'http://10.0.2.2:3333/api/v0.0.5/user/'+window.$otherUser+'/photo/'}}/>
-        <Text style={styling.tx2}>{this.state.new.given_name+" "+this.state.new.family_name}</Text>
-        {this.TestFunc() ? <TouchableOpacity style={styling.btnPosition} onPress={() => { this.unFollow(window.$otherUser); } }>
-                <View style={styling.btnStyle}>
-                  <Text style={styling.btntxt}>Unfollow</Text>
+      <View>
+        <View style ={styles.FirstContainer}>
+          <Image style={styles.ProfileImage} source={{uri: 'http://10.0.2.2:3333/api/v0.0.5/user/'+ window.$otherUser +'/photo'}}/>
+          <Text style={styles.NameStyle}>{this.state.new.given_name+" "+this.state.new.family_name}</Text>
+        </View>
+        <View style={styles.NavigationSection}>
+        {this.TestFunc() ? <TouchableOpacity style={styles.btnPosition} onPress={() => { this.unFollow(window.$otherUser); } }>
+                <View style={styles.btnStyle}>
+                  <Text style={styles.btntxt}>Unfollow</Text>
                 </View>
-              </TouchableOpacity>: <TouchableOpacity style={styling.btnPosition} onPress={() => { this.follow(window.$otherUser); } }>
-                  <View style={styling.btnStyle}>
-                    <Text style={styling.btntxt}>Follow</Text>
+              </TouchableOpacity> : <TouchableOpacity style={styles.btnPosition} onPress={() => { this.follow(window.$otherUser); } }>
+                  <View style={styles.btnStyle}>
+                    <Text style={styles.btntxt}>Follow</Text>
                   </View>
           </TouchableOpacity>
           }
-
+          <TouchableOpacity style={styles.btnPosition} onPress={() => {this.props.navigation.navigate('HomeScreen') } }>
+                  <View style={styles.btnStyle}>
+                    <Text style={styles.btntxt}>Back</Text>
+                  </View>
+          </TouchableOpacity>
         </View>
-        <FlatList style ={styling.con} nestedScrollEnabled={true} data={this.state.new.recent_chits} 
-        renderItem= {({ item }) => (<View style={styling.listStyle}>
-          <Text style={styling.tx2}>{this.state.new.email}</Text>
-        <Text style={styling.tx2}>{item.chit_content}</Text></View> )} keyExtractor={({ id }) => id}/>
-      </View>);
+
+<FlatList style ={styles.SecondContainer} nestedScrollEnabled={true} data={this.state.new.recent_chits} 
+renderItem= {({ item }) => (
+  <View style={styles.ListStyle}>
+
+  <View style={styles.UpperSection}>
+    <Image style={styles.UserChitImage} source={{ uri: 'http://10.0.2.2:3333/api/v0.0.5/user/' + window.$otherUser + '/photo' }} />
+
+    <View style={styles.UpperTextSplit}>
+
+      <View style={styles.UpperTextRow}>
+        <Text style={styles.EmailStyle}>{this.state.new.email}</Text>
+      </View>
+
+        <Text style={styles.DateStyle}>{new Date(item.timestamp).toDateString()}</Text>
+    </View>
+  </View>
+  <View style={styles.LowerSection}>
+
+    <Text style={styles.ChitContentStyle}>{item.chit_content}</Text>
+    <Image style={styles.ChitImageStyle} source={{ uri: 'http://10.0.2.2:3333/api/v0.0.5/chits/' + item.chit_id + '/photo' }} />
+    </View></View>)} keyExtractor={({ id }) => id} />
+    </View>);
   }
 }
-export default OtherProfiles;
 
-const styling = StyleSheet.create({
-  cont: {
-    //backgroundColor: 'white',
-    padding: 0,
-  },
-  container2: {
-    flexDirection: 'row',
+const styles = StyleSheet.create({
+
+  FirstContainer: {
+    flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'grey'
   },
-  circle: {
-    //backgroundColor: 'red',
-    height: 100,
-    width: 100,
-    borderRadius: 30,
+  ProfileImage: {
+    height: 150,
+    width: 150,
+    borderRadius: 75,
+    borderColor: 'black',
+    borderWidth: 2
   },
-  listStyle: {
-    padding: 10,
-    borderWidth: 15,
-    borderColor: 'lightgrey',
+  NameStyle: {
+    fontSize: 30,
+    fontWeight: 'bold'
   },
-  txt: {
-    paddingBottom: 30
+  UpperSplitSection: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    backgroundColor: 'grey'
   },
-  btnPosition: {
-    alignItems: 'center'
+  ButtonPosition: {
+    alignItems: 'center',
   },
-  btnStyle: {
-    backgroundColor: 'black',
+  ButtonStyle: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 5,
+    marginBottom: 10,
+    width: 50,
+  },
+  NavigationSection: {
+    backgroundColor: 'darkgrey',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+
+  },
+  NavigationButtonStyle: {
+    backgroundColor: 'white',
     borderRadius: 20,
     padding: 5,
     marginBottom: 10,
     width: 100,
   },
-  btntxt: {
-    color: 'white',
+  NavigationButtonTextStyle: {
+    color: 'black',
     fontSize: 20,
     fontWeight: '800',
     textAlign: 'center',
-  }
+  },
+  SecondContainer: {
+    //backgroundColor: 'white',
+    padding: 0,
+  },
+  ListStyle: {
+    padding: 10,
+    borderWidth: 5,
+    borderColor: 'lightgrey',
+  },
+  UpperSection: {
+    flexDirection: 'row',
+    paddingBottom: 10,
+    //borderWidth: 1,
+    //borderColor: 'black',
+    //backgroundColor: 'red',
+  },
+  UserChitImage: {
+    //backgroundColor: 'red',
+    height: 50,
+    width: 50,
+    borderRadius: 30,
+    borderColor: 'black',
+    borderWidth: 1,
+    padding: 30
+  },
+  UpperTextSplit: {
+    paddingLeft: 5,
+    paddingTop: 0,
+    flexDirection: 'column',
+  },
+  UpperTextRow: {
+    flexDirection: 'row'
+  },
+  EmailStyle: {
+    paddingRight: 120,
+    fontWeight: 'bold'
+  },
+  LocationStyle: {
+    backgroundColor: 'green',
+    borderRadius: 2,
+    paddingLeft: 5,
+    paddingRight: 5
+  },
+  DateStyle: {
+    color: 'grey'
+  },
+  LowerSection: {
+    backgroundColor: 'grey',
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 10,
+  },
+  ChitContentStyle: {
+    paddingLeft: 5
+  },
+  ChitImageStyle: {
+    height: 150,
+    width: 300,
+    //borderWidth: 2,
+    //borderColor: 'black',
+    //borderRadius: 1,
+    //backgroundColor: 'grey'
+  },
 });

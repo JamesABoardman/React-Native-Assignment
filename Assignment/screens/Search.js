@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {ActivityIndicator, Text, View, FlatList, StyleSheet, TextInput, TouchableOpacity, Alert, Image} from 'react-native';
+import { Icon } from 'react-native-elements';
 
-class Search extends Component {
+export default class Search extends Component {
   constructor(props) {
     super(props);
 
@@ -19,12 +20,29 @@ class Search extends Component {
     }
   }
 
-  viewOtherUsers(id) {
+  viewOtherUsers(id) { // Takes the id to navigate to that page using that ID.
     this.props.navigation.navigate('OtherProfiles')
   }
 
+  // This method uses a GET/ REQUEST to get all of a users following.
+  getFollowing() {
+    return fetch('http://10.0.2.2:3333/api/v0.0.5/user/'+window.$ID+"/following/").then((response) => response.json()) // Request that gets the following.
+    .then((responseJson) => {
+      this.setState({isLoading: false, FollowingList: responseJson});
+      window.$ez = []; //Empty Array to parse the USERID into.
+      this.state.FollowingList.forEach(myFunction);
+      function myFunction(item, index) {
+        window.$ez.push(item.user_id) //Pushes the user_id's to the array
+        console.log(window.$ez)
+      }
+   
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
   getSearch = () => {
-    return fetch('http://10.0.2.2:3333/api/v0.0.5/search_user?q='+this.state.q).then((response) => response.json())
+    return fetch('http://10.0.2.2:3333/api/v0.0.5/search_user?q='+this.state.q).then((response) => response.json()) // Request that searches for a user.
     .then((responseJson) => {
       this.setState({isLoading: false, users: responseJson});
       window.$id = []; //Empty Array to parse the USERID into.
@@ -40,6 +58,10 @@ class Search extends Component {
     });
   }
 
+  componentDidMount(){
+    this.getFollowing();
+  }
+
   render() {
       return (
         <View style={styling.container}>
@@ -47,18 +69,18 @@ class Search extends Component {
           <TextInput style={styling.txtInputStyle} placeholder = 'enter search here' placeholderTextColor='black' onChangeText={(q) => { this.setState({q})}} value={this.state.q}></TextInput>
         <TouchableOpacity style={styling.searchbtnPosition} onPress={this.getSearch}>
           <View style={styling.btnStyle}>
-            <Text style={styling.searchbtntext}>Search</Text>
+          <Icon name='search' size={30}/>
           </View>
         </TouchableOpacity>
         </View> 
           <FlatList nestedScrollEnabled={true} data={this.state.users} 
           renderItem= {({ item }) => (<View style={styling.listStyle}>
-          <View style={{flexDirection: 'row', alignItems: 'center', backgroundColor: 'grey'}}>
-          <Image style={styling.circle} source={{uri: 'http://10.0.2.2:3333/api/v0.0.5/user/'+item.user_id+'/photo/'}}/>
+          <View style={{flexDirection: 'row', alignItems: 'center', backgroundColor: 'white'}}>
+          <Image style={styling.circle} source={{uri: 'http://10.0.2.2:3333/api/v0.0.5/user/'+item.user_id+'/photo'}}/>
           <View style={{flexDirection: 'column', justifyContent: 'center'}}>
           <Text style={styling.txt}>{item.given_name+ " "+ item.family_name+'\n'+item.email}</Text>
           <TouchableOpacity style={styling.btnPosition} onPress={() => { this.viewOtherUsers(window.$otherUser = item.user_id); } }>
-                <View style={styling.btnStyle}>
+                <View style={styling.btnStyle2}>
                   <Text style={styling.btntxt}>View 
                   Profile</Text>
                 </View>
@@ -70,7 +92,6 @@ class Search extends Component {
         );
       }
   }
-export default Search;
 
 const styling = StyleSheet.create({
   container: {
@@ -86,7 +107,8 @@ const styling = StyleSheet.create({
     //backgroundColor: 'red'
   },
   txt: {
-    paddingBottom: 30
+    paddingLeft: 5,
+    paddingBottom: 5
   },
   searchbtnPosition: {
     alignItems: 'center',
@@ -96,6 +118,13 @@ const styling = StyleSheet.create({
     alignItems: 'flex-start',
   },
   btnStyle: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 5,
+    marginBottom: 10,
+    width: 50,
+  },
+  btnStyle2: {
     backgroundColor: 'black',
     borderRadius: 20,
     padding: 5,

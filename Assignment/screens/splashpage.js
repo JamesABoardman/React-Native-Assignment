@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-class splashpage extends Component {
+export default class splashpage extends Component {
   render() {
     return (
       <View style={styling.container}>
@@ -35,7 +35,6 @@ class splashpage extends Component {
     );
   }
 }
-export default splashpage;
 
 const styling = StyleSheet.create({
   container: {

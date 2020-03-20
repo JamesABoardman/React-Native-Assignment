@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {ActivityIndicator, Text, View, Button, ScrollView, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
+import React, { Component } from 'react';
+import { ActivityIndicator, Text, View, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
-class Following extends Component {
+export default class Following extends Component {
   constructor(props) {
     super(props);
 
@@ -11,31 +11,21 @@ class Following extends Component {
     }
   }
 
-  getFollowing() {
-    return fetch('http://10.0.2.2:3333/api/v0.0.5/user/'+window.$ID+"/following/").then((response) => response.json())
-    .then((responseJson) => {
-      this.setState({isLoading: false, FollowingList: responseJson});
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
-
-  unFollow(id){
-    return fetch('http://10.0.2.2:3333/api/v0.0.5/user/' + id + '/follow/', {method: 'delete', headers: {
-      "Content-Type": "application/json",
-      "X-Authorization": window.$TOKEN
-    },
-  }).then((response) => {
-      if(response.status == 200) {
-        Alert.alert("User Unfollowed")
+  // This method uses a GET/ REQUEST to get all of a users following.
+  async getFollowing() {
+    try {
+      const response = await fetch('http://10.0.2.2:3333/api/v0.0.5/user/' + window.$ID + "/following/");
+      const responseJson = await response.json();
+      if (response.status == 200) { // This will only redirect if the status code == 200 "OK".
+      this.setState({ isLoading: false, FollowingList: responseJson }); // Sets the response to the object inside the state.
       }
-      if(response.status == 400){
-        Alert.alert("User Not following")
+      if (response.status == 404) { // This will display an alert to screen if there is an Error with getting the user Following.
+        Alert.alert(" Users Following could not be found ")
       }
-    }).catch((error) => {
-      
-      console.log(error);
-    });
+    }
+    catch (error) {
+      console.warn(error);
+    }
   }
   
   componentDidMount() {
@@ -50,49 +40,48 @@ class Following extends Component {
     }
 
     return (
-      <View style={styling.container}>
+      <View style={styles.Container}>
         <FlatList nestedScrollEnabled={true} data={this.state.FollowingList} 
-        renderItem= {({ item }) => (<View style={styling.listStyle}>
-        <Text style={styling.txt}>{item.given_name+ " "+ item.family_name}</Text>
-        <Text>{item.email}</Text>
-        <TouchableOpacity style={styling.btnPosition} onPress={() => { this.unFollow(item.user_id); } }>
-                <View style={styling.btnStyle}>
-                  <Text style={styling.btntxt}>Unfollow</Text>
-                </View>
-              </TouchableOpacity>
-        </View> )} keyExtractor={({ id }, index) => id}/>
+        renderItem= {({ item }) => (<View style={styles.ListStyle}>
+        <View style={styles.FollowingContainer}>
+          <Image style={styles.UserImageStyle} source={{uri: 'http://10.0.2.2:3333/api/v0.0.5/user/'+ item.user_id +'/photo'}}/>
+          <View style={styles.UserDetailContainer}>
+            <Text style={styles.UserNameStyle}>{item.given_name+ " "+ item.family_name}</Text>
+            <Text>{item.email}</Text>
+          </View>
+        </View>
+      </View> )} keyExtractor={({ id }, index) => id}/>
       </View>);
   }
 }
-export default Following;
 
-const styling = StyleSheet.create({
-  container: {
+const styles = StyleSheet.create({
+  Container: {
     backgroundColor: 'white',
     padding: 0,
   },
-  listStyle: {
+  ListStyle: {
     padding: 10,
-    borderWidth: 15,
+    borderWidth: 5,
     borderColor: 'lightgrey',
   },
-  txt: {
-    paddingBottom: 30
+  FollowingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
   },
-  btnPosition: {
-    alignItems: 'flex-start'
+  UserImageStyle: {
+    backgroundColor: 'red',
+    height: 50,
+    width: 50,
+    borderRadius: 30,
+    borderWidth: 1,
+    borderColor: 'black'
   },
-  btnStyle: {
-    backgroundColor: 'black',
-    borderRadius: 20,
-    padding: 5,
-    marginBottom: 10,
-    width: 100,
+  UserDetailContainer: {
+    flexDirection: 'column',
+    paddingLeft: 10
   },
-  btntxt: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: '800',
-    textAlign: 'center',
-  }
+  UserNameStyle: {
+    fontWeight: 'bold'
+  },
 });
