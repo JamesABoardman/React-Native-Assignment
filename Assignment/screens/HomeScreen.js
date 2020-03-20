@@ -16,7 +16,7 @@ export default class HomeScreen extends Component {
   }
 
       getChits() {
-        Geocoder.init("AIzaSyCnhPmJgB1FJPP58ziM2PIPDf9CVBLJ4bk"); // Key to access an api.
+        Geocoder.init("API_HERE"); // Key to access an api.
         return fetch('http://10.0.2.2:3333/api/v0.0.5/chits').then((response) => response.json()) // Calls for data using a get.
         .then((responseJson) => {
           responseJson.forEach(item => { // Loops through the response.
